@@ -258,7 +258,7 @@ SilentCorridorX_CL
 
 ## Investigation
 
-The residential IP `185.220.101.34` consistently authenticated to `WS-ENG04`, identifying it as the initial foothold established inside the Engineering network.
+Multiple SSL VPN connection attempts were observed from remote IP `185.220.101.34`, a known Tor exit node associated with anonymized traffic, targeting host `WS-ENG04`.
 
 ## MITRE ATT&CK Mapping
 
