@@ -447,6 +447,7 @@ HuntData
 | project EventTime, FileName, FolderPath, ActionType
 | sort by EventTime asc
 ```
+<img width="740" height="98" alt="image" src="https://github.com/user-attachments/assets/7c5582d4-0963-4493-87db-74734d38b8e1" />
 
 ## Investigation
 
