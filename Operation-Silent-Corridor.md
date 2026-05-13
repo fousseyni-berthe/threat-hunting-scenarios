@@ -327,6 +327,7 @@ SilentCorridorX_CL
 | project EventTime, AccountName, FileName, ProcessCommandLine
 | sort by EventTime asc
 ```
+<img width="745" height="199" alt="image" src="https://github.com/user-attachments/assets/579c53b7-fd11-45df-97f3-18ea6b27cf86" />
 
 ## Investigation
 
