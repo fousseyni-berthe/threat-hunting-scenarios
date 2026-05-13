@@ -216,6 +216,7 @@ SilentCorridorX_CL
 | where AccountName == "s.brandt"
 | distinct RemoteIP
 ```
+<img width="251" height="174" alt="image" src="https://github.com/user-attachments/assets/3b7b3012-9ea2-4ce4-987e-996f2c89b932" />
 
 ## Investigation
 
