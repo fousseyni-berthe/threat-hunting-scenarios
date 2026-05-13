@@ -108,11 +108,7 @@ The investigation reviewed VPN authentication activity for all users and identif
 
 Observed IPs:
 
-* 88.153.72.14
-* 185.220.101.34
-* 91.234.33.126
-* 45.153.160.88
-<img width="122" height="141" alt="image" src="https://github.com/user-attachments/assets/75e39492-d6a4-4c49-a454-516bf68f7902" />
+<img width="142" height="161" alt="image" src="https://github.com/user-attachments/assets/75e39492-d6a4-4c49-a454-516bf68f7902" />
 
 The multiple geographically inconsistent VPN connections strongly suggested compromised credentials and unauthorized remote access.
 
