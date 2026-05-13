@@ -528,6 +528,7 @@ HuntData
 | project EventTime, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName
 | sort by EventTime asc
 ```
+<img width="887" height="107" alt="image" src="https://github.com/user-attachments/assets/284b5234-5f41-43d3-abcd-3d206be86887" />
 
 ## Investigation
 
