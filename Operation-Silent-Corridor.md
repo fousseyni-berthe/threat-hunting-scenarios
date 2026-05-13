@@ -254,6 +254,7 @@ SilentCorridorX_CL
 | project EventTime, RemoteIP, ActionType, DestinationHost, TunnelIP
 | sort by EventTime asc
 ```
+<img width="769" height="211" alt="image" src="https://github.com/user-attachments/assets/1c87331e-09f8-48f9-8814-28bdb299c9e2" />
 
 ## Investigation
 
