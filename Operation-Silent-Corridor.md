@@ -287,10 +287,10 @@ SilentCorridorX_CL
 | where MdeTable == "DeviceProcessEvents"
 | where DeviceName == "WS-ENG04"
 | where AccountName == "s.brandt"
-| project EventTime, FileName, ProcessCommandLine, InitiatingProcessFileName
+| project EventTime, FileName, DeviceName, ProcessCommandLine, InitiatingProcessFileName
 | sort by EventTime asc
 ```
-<img width="675" height="181" alt="image" src="https://github.com/user-attachments/assets/0ad84df6-181f-4fa9-a1ef-791aefe55c97" />
+<img width="752" height="173" alt="image" src="https://github.com/user-attachments/assets/9290b6e1-0583-4fbc-aec3-458f95ce837b" />
 
 ## Investigation
 
