@@ -364,6 +364,7 @@ SilentCorridorX_CL
 | project EventTime, DnsQueryString, DnsQueryResult, FileName
 | sort by EventTime asc
 ```
+<img width="709" height="323" alt="image" src="https://github.com/user-attachments/assets/07c42ffa-23e9-41bb-8602-b91b66d34a4c" />
 
 ## Investigation
 
