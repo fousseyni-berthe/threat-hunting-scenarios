@@ -98,8 +98,8 @@ Format: username
 SilentCorridorX_CL
 | where TimeGenerated > datetime(2026-04-07T14:00:00Z)
 | where MdeTable == "FortiGateVPN"
-| summarize count() by AccountName, RemoteIP, ActionType
-| sort by count_ desc
+| where AccountName == "s.brandt"
+| distinct RemoteIP
 ```
 
 ## Investigation
@@ -112,6 +112,7 @@ Observed IPs:
 * 185.220.101.34
 * 91.234.33.126
 * 45.153.160.88
+<img width="122" height="141" alt="image" src="https://github.com/user-attachments/assets/75e39492-d6a4-4c49-a454-516bf68f7902" />
 
 The multiple geographically inconsistent VPN connections strongly suggested compromised credentials and unauthorized remote access.
 
