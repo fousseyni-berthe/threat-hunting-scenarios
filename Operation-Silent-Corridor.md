@@ -250,15 +250,15 @@ SilentCorridorX_CL
 | where TimeGenerated > datetime(2026-04-07T14:00:00Z)
 | where MdeTable == "FortiGateVPN"
 | where AccountName == "s.brandt"
-| where RemoteIP == "91.234.33.126"
+| where RemoteIP == "185.220.101.34"
 | project EventTime, RemoteIP, ActionType, DestinationHost, TunnelIP
 | sort by EventTime asc
 ```
-<img width="769" height="211" alt="image" src="https://github.com/user-attachments/assets/1c87331e-09f8-48f9-8814-28bdb299c9e2" />
+<img width="627" height="299" alt="image" src="https://github.com/user-attachments/assets/26076134-2a77-4336-b06d-90866bd39755" />
 
 ## Investigation
 
-The residential IP `91.234.33.126` consistently authenticated to `WS-ENG04`, identifying it as the initial foothold established inside the Engineering network.
+The residential IP `185.220.101.34` consistently authenticated to `WS-ENG04`, identifying it as the initial foothold established inside the Engineering network.
 
 ## MITRE ATT&CK Mapping
 
