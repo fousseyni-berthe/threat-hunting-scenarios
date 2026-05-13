@@ -139,19 +139,11 @@ SilentCorridorX_CL
 | where isnotempty(EventTime)
 | where MdeTable == "FortiGateVPN"
 | where AccountName == "s.brandt"
-| distinct ActionType
-```
-
-```kql
-SilentCorridorX_CL
-| where TimeGenerated > datetime(2026-04-07T14:00:00Z)
-| where isnotempty(EventTime)
-| where MdeTable == "FortiGateVPN"
-| where AccountName == "s.brandt"
 | where ActionType == "ssl-login-fail"
 | project EventTime, AccountName, RemoteIP, ActionType, TunnelIP, DestinationHost
 | order by EventTime asc
 ```
+<img width="708" height="127" alt="image" src="https://github.com/user-attachments/assets/d2e4da99-0bdf-4482-a960-88269a6a5750" />
 
 ## Investigation
 
