@@ -290,6 +290,7 @@ SilentCorridorX_CL
 | project EventTime, FileName, ProcessCommandLine, InitiatingProcessFileName
 | sort by EventTime asc
 ```
+<img width="675" height="181" alt="image" src="https://github.com/user-attachments/assets/0ad84df6-181f-4fa9-a1ef-791aefe55c97" />
 
 ## Investigation
 
