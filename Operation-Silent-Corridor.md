@@ -180,6 +180,7 @@ SilentCorridorX_CL
 | sort by DeviceName asc
 | count
 ```
+<img width="245" height="114" alt="image" src="https://github.com/user-attachments/assets/863fc4bf-b2c1-43ca-a1ae-690d35f13ab2" />
 
 ## Investigation
 
