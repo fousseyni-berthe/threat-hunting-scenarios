@@ -487,6 +487,7 @@ HuntData
 | project EventTime, ProcessCommandLine
 | sort by EventTime asc
 ```
+<img width="557" height="157" alt="image" src="https://github.com/user-attachments/assets/839d9588-c396-4fee-96ea-fc7880238bc0" />
 
 ## Investigation
 
