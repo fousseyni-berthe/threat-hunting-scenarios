@@ -681,6 +681,7 @@ SilentCorridorX_CL
 | project EventTime, FileName, FolderPath, InitiatingProcessCommandLine
 | sort by todatetime(EventTime) asc
 ```
+<img width="582" height="175" alt="image" src="https://github.com/user-attachments/assets/59355ba3-7a2a-4cca-a873-ba1040aa4298" />
 
 ## Investigation
 
