@@ -1143,6 +1143,7 @@ This cmdlet compressed the targeted engineering files into an archive prior to e
 # HUNT LEAD: 
 
 "Binary files don't transit well. They would have converted it first. What did they use?"
+
 Format: Tool name (with or without .exe)
 
 ## Query Used
@@ -1159,7 +1160,8 @@ HuntData
 | sort by EventTime asc
 ```
 
-<img width="1068" height="207" alt="image" src="https://github.com/user-attachments/assets/fe6afd11-61b7-47a7-88b6-cac376b92d21" />
+<img width="1098" height="196" alt="image" src="https://github.com/user-attachments/assets/8489c9b3-d256-4c0e-9c98-e7260fcfed48" />
+
 
 ## Investigation
 
@@ -1199,6 +1201,8 @@ HuntData
 | sort by EventTime asc
 ```
 
+<img width="1094" height="179" alt="image" src="https://github.com/user-attachments/assets/098265b5-1f04-49ed-8506-31157f65298d" />
+
 ## Investigation
 
 The attacker exfiltrated data using PowerShell `Invoke-WebRequest` through an HTTP POST request.
@@ -1222,6 +1226,22 @@ The encoded archive was transferred from `WS-ENG04` to an external attacker-cont
 "Where did it go?"
 
 Format: Domain name
+
+## Query Used
+
+```kql
+let HuntData = SilentCorridorX_CL
+| where isnotempty(EventTime)
+| where TimeGenerated > datetime(2026-04-07T14:00:00Z);
+HuntData
+| where MdeTable == "DeviceProcessEvents"
+| where ProcessCommandLine has_any ("curl", "wget", "Invoke-WebRequest", "WebClient", "UploadFile", "ftp", "scp", "bitsadmin", "certutil", "nc ", "ncat", "powershell")
+| where ProcessCommandLine has_any ("upload", "post", "PUT", "send", "transfer", "b64", "kb5034", "nav_cache")
+| project EventTime, DeviceName, AccountName, FileName, ProcessCommandLine
+| sort by EventTime asc
+```
+
+<img width="1094" height="179" alt="image" src="https://github.com/user-attachments/assets/5843efa9-a1aa-45e1-ba1d-e1950b5fe15e" />
 
 ## Investigation
 
@@ -1286,6 +1306,7 @@ HuntData
 | project EventTime, DeviceName, AccountName, FileName, ProcessCommandLine
 | sort by EventTime asc
 ```
+<img width="1086" height="360" alt="image" src="https://github.com/user-attachments/assets/d01bc5c4-eac4-4af0-85c3-615522343307" />
 
 ## Investigation
 
@@ -1305,14 +1326,15 @@ This command cleared Windows Security event logs on compromised systems as part 
 
 ---
 
-# Flag 33 – Cleanup Propagation
+# Flag 33 – Clearing Method Analysis
 
-## Investigation
+## Hunt lead
 
-The attacker leveraged `WS-ENG04` to remotely execute log clearing activity against:
+"They cleared logs on every host. But not all the same way.
 
-* SRV-DC01
-* SRV-FILES02
+Which host had logs cleared from the console, and which had them cleared remotely?"
+
+Format: DIRECT_HOST/REMOTE_HOSTS (remotes alphabetical, comma-separated)
 
 ## Query Used
 
@@ -1321,9 +1343,18 @@ let HuntData = SilentCorridorX_CL
 | where isnotempty(EventTime)
 | where TimeGenerated > datetime(2026-04-07T14:00:00Z);
 HuntData
-| where FileName == "wevtutil.exe"
+| where FileName == "wevtutil.exe" 
 | summarize Parent=any(InitiatingProcessFileName) by DeviceName
 ```
+
+<img width="270" height="146" alt="image" src="https://github.com/user-attachments/assets/11e6ab54-717b-4024-acb9-41eed9c9a3ac" />
+
+## Investigation
+
+The attacker leveraged `WS-ENG04` to remotely execute log clearing activity against:
+
+* SRV-DC01
+* SRV-FILES02
 
 ## MITRE ATT&CK Mapping
 
