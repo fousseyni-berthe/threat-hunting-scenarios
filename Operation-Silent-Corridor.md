@@ -795,6 +795,7 @@ SilentCorridorX_CL
 | project EventTime, AccountName, FileName, FolderPath, ProcessCommandLine
 | sort by EventTime desc
 ```
+<img width="930" height="120" alt="image" src="https://github.com/user-attachments/assets/16daaa35-ab33-407b-b551-ad1580c73699" />
 
 ## Investigation
 
@@ -833,6 +834,7 @@ HuntData
 | project EventTime, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName
 | sort by EventTime asc
 ```
+<img width="976" height="273" alt="image" src="https://github.com/user-attachments/assets/47ede987-0cea-4572-91a3-902bbf9d5045" />
 
 ## Investigation
 
