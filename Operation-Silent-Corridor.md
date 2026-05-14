@@ -1523,15 +1523,15 @@ The investigation confirmed compromise of both `s.brandt` and `m.richter` accoun
    * `wevtutil.exe`
    * `cmdkey.exe`
    * `netsh interface portproxy`
-   * WMIC remote execution
+   * `WMIC remote execution`
 
 ---
 
 # Lessons Learned
 
-The investigation demonstrated that VPN credential abuse combined with built-in Windows administrative utilities enabled rapid lateral movement and credential compromise. The attacker successfully leveraged trusted tools such as WMIC, netsh, PowerShell, and certutil to blend into legitimate administrative activity.
+The investigation demonstrated that VPN credential abuse combined with built-in Windows administrative utilities enabled rapid lateral movement and credential compromise. The attacker successfully leveraged trusted tools such as `WMIC`, `netsh`, `PowerShell`, and `certutil` to blend into legitimate administrative activity.
 
 The compromise of `ntds.dit` represented a critical security incident capable of exposing all domain credentials. Additionally, the use of persistent port proxy configurations enabled covert tunneling that would survive password resets and system reboots.
 
-Despite extensive anti-forensic activity, Sysmon telemetry provided sufficient visibility to reconstruct the full attack chain, emphasizing the importance of redundant logging strategies and centralized telemetry collection.
+Despite extensive anti-forensic activity, `Sysmon` telemetry provided sufficient visibility to reconstruct the full attack chain, emphasizing the importance of redundant logging strategies and centralized telemetry collection.
 
