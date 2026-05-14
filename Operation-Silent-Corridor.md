@@ -959,6 +959,7 @@ HuntData
 | project EventTime, AccountName, RegistryKey, RegistryValueData, ActionType
 | sort by EventTime asc
 ```
+<img width="856" height="99" alt="image" src="https://github.com/user-attachments/assets/650a192a-11db-4e4a-9d22-26f00d47b524" />
 
 ## Investigation
 
@@ -999,6 +1000,7 @@ HuntData
 | project EventTime, DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName
 | sort by EventTime asc
 ```
+<img width="1072" height="94" alt="image" src="https://github.com/user-attachments/assets/82a23e8f-23a0-45bb-b9b4-bce69bbf2b8d" />
 
 ## Investigation
 
@@ -1036,6 +1038,7 @@ HuntData
 | project EventTime, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName
 | sort by EventTime asc
 ```
+<img width="1073" height="197" alt="image" src="https://github.com/user-attachments/assets/ba616073-6933-4089-a2e9-e949eddaf076" />
 
 ## Investigation
 
@@ -1064,6 +1067,21 @@ The directory contents were archived and prepared for exfiltration.
 
 Format: Filename with extension
 
+## Query Used
+
+```kql
+let HuntData = SilentCorridorX_CL
+| where isnotempty(EventTime)
+| where TimeGenerated > datetime(2026-04-07T14:00:00Z);
+HuntData
+| where MdeTable == "DeviceProcessEvents"
+| where DeviceName has "SRV-FILES02"
+| where ProcessCommandLine has_any ("zip", "rar", "7z", "compress", "archive", "tar", "cab", "winzip", "compact")
+| project EventTime, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName
+| sort by EventTime asc
+```
+<img width="1073" height="197" alt="image" src="https://github.com/user-attachments/assets/f2768132-4b71-4158-83dc-ac11a05b9b80" />
+
 ## Investigation
 
 The attacker disguised the archive as a Windows update package.
@@ -1086,6 +1104,22 @@ The attacker disguised the archive as a Windows update package.
 
 Format: Cmdlet name
 
+## Query Used
+
+```kql
+let HuntData = SilentCorridorX_CL
+| where isnotempty(EventTime)
+| where TimeGenerated > datetime(2026-04-07T14:00:00Z);
+HuntData
+| where MdeTable == "DeviceProcessEvents"
+| where DeviceName has "SRV-FILES02"
+| where ProcessCommandLine has_any ("zip", "rar", "7z", "compress", "archive", "tar", "cab", "winzip", "compact")
+| project EventTime, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName
+| sort by EventTime asc
+```
+
+<img width="1073" height="197" alt="image" src="https://github.com/user-attachments/assets/5768ae81-436e-461f-8c8b-2e7a7936b4ab" />
+
 ## Investigation
 
 The attacker used the PowerShell cmdlet:
@@ -1105,6 +1139,27 @@ This cmdlet compressed the targeted engineering files into an archive prior to e
 ---
 
 # Flag 28 – Encoding Utility
+
+# HUNT LEAD: 
+
+"Binary files don't transit well. They would have converted it first. What did they use?"
+Format: Tool name (with or without .exe)
+
+## Query Used
+
+```kql
+let HuntData = SilentCorridorX_CL
+| where isnotempty(EventTime)
+| where TimeGenerated > datetime(2026-04-07T14:00:00Z);
+HuntData
+| where MdeTable == "DeviceProcessEvents"
+| where DeviceName has "SRV-FILES02"
+| where ProcessCommandLine has_any ("zip", "rar", "7z", "compress", "archive", "tar", "cab", "winzip", "compact")
+| project EventTime, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName
+| sort by EventTime asc
+```
+
+<img width="1068" height="207" alt="image" src="https://github.com/user-attachments/assets/fe6afd11-61b7-47a7-88b6-cac376b92d21" />
 
 ## Investigation
 
