@@ -1375,6 +1375,21 @@ The attacker leveraged `WS-ENG04` to remotely execute log clearing activity agai
 
 Format: Log source name
 
+## Query Used
+
+```kql
+let HuntData = SilentCorridorX_CL
+| where isnotempty(EventTime)
+| where TimeGenerated > datetime(2026-04-07T14:00:00Z);
+HuntData
+| where MdeTable == "DeviceEvents"
+| where ActionType == "SysmonEvent26"
+| project EventTime, DeviceName, AccountName, FileName, ActionType
+| sort by EventTime asc
+```
+
+<img width="792" height="133" alt="image" src="https://github.com/user-attachments/assets/f68274e9-164f-48f8-bc5e-b352d8015575" />
+
 ## Investigation
 
 Sysmon logging remained intact despite clearing of Windows Security logs with `wevtutil cl Security` command .
@@ -1402,9 +1417,7 @@ Format: HIGH/MEDIUM/LOW followed by supporting evidence
 
 ## Investigation
 
-Evidence confirmed successful exfiltration of sensitive data through multiple correlated telemetry sources.
-
-The archive containing stolen data was compressed, Base64 encoded, staged on the beachhead, and transferred to an external domain using PowerShell.
+Evidence confirmed successful exfiltration of sensitive data through multiple correlated telemetry sources. The archive containing stolen data was compressed, Base64 encoded, staged on the beachhead, and transferred to an external domain using PowerShell.
 
 ## MITRE ATT&CK Mapping
 
@@ -1439,14 +1452,11 @@ HuntData
 | project EventTime, DeviceName, AccountName, ProcessCommandLine
 | sort by EventTime asc
 ```
+<img width="790" height="118" alt="image" src="https://github.com/user-attachments/assets/8b2826a0-836c-41cc-927d-c0c6dcfbc96f" />
 
 ## Investigation
 
-The attacker deleted the staging directory using:
-
-`cmd.exe /c rmdir /s /q C:\Windows\Temp\McAfee_Logs`
-
-This activity removed staged Active Directory database artifacts from `SRV-DC01`.
+The attacker deleted the staging directory using: `cmd.exe /c rmdir /s /q C:\Windows\Temp\McAfee_Logs`. This activity removed staged Active Directory database artifacts from `SRV-DC01`.
 
 ## MITRE ATT&CK Mapping
 
