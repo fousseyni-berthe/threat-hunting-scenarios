@@ -2,19 +2,24 @@
 
 Aligned with NIST SP 800-61 and mapped to the MITRE ATT&CK Framework
 
----
+# 📋 Scenario Overview
 
-# Executive Summary
+`BfV (German federal intelligence)` has issued a confidential advisory to defence sector organisations. A state-sponsored actor designated `GREY VEIL` has been conducting intrusions against European aerospace and defence contractors since late `2025`.
+`GREY VEIL` is assessed to operate on behalf of a foreign intelligence service. Their primary objectives are intellectual property theft and persistent access to engineering networks. Previous victims reported extended dwell times before detection.
+`K. Hofmann`, CISO of `Haldric Aerospace`, has commissioned a proactive threat hunt across the engineering segment. Investigation window: `20 February to 5 March 2026`.
 
-The Hunt 04 investigation identified a successful multi-stage intrusion targeting the Engineering network through compromised VPN credentials associated with the accounts `s.brandt` and `m.richter`. The attacker initially gained access through the FortiGate VPN infrastructure using anonymized infrastructure and residential IP addresses before establishing a foothold on `WS-ENG04`.
+
+# 🛡️ Executive Summary
+
+The Hunt investigation identified a successful multi-stage intrusion targeting the Engineering network through compromised VPN credentials associated with the accounts `s.brandt` and `m.richter`. The attacker initially gained access through the FortiGate VPN infrastructure using anonymized infrastructure and residential IP addresses before establishing a foothold on `WS-ENG04`.
 
 Following initial access, the threat actor conducted internal reconnaissance, credential access activities, lateral movement to `SRV-DC01` and `SRV-FILES02`, and ultimately staged and exfiltrated sensitive data. Targeted assets included the Active Directory database (`ntds.dit`) and classified engineering data located in `C:\Engineering\Avionics\A400M_NavSys`. The adversary established persistence through `netsh interface portproxy` configurations stored in the registry under: `HKLM\System\CurrentControlSet\Services\PortProxy\v4tov4\tcp`
 
-The actor also attempted anti-forensic cleanup by clearing Windows event logs and deleting staging artifacts. However, Sysmon telemetry remained intact and enabled reconstruction of attacker activity.
+The actor also attempted anti-forensic cleanup by clearing Windows event logs and deleting staging artifacts. However, `Sysmon` telemetry remained intact and enabled reconstruction of attacker activity.
 
 ---
 
-# Incident Classification (NIST SP 800-61)
+# 🏷️ Incident Classification (NIST SP 800-61)
 
 | Category          | Classification                                        |
 | ----------------- | ----------------------------------------------------- |
@@ -28,7 +33,7 @@ The actor also attempted anti-forensic cleanup by clearing Windows event logs an
 
 ---
 
-# MITRE ATT&CK Techniques Observed
+# 🔍 MITRE ATT&CK Techniques Observed
 
 | Tactic            | Technique ID | Technique                          |
 | ----------------- | ------------ | ---------------------------------- |
@@ -51,7 +56,7 @@ The actor also attempted anti-forensic cleanup by clearing Windows event logs an
 
 ---
 
-# Threat Hunt Findings
+# 🎯 Threat Hunt Findings
 
 ---
 
