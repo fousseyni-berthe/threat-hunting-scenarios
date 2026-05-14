@@ -64,7 +64,9 @@ The actor also attempted anti-forensic cleanup by clearing Windows event logs an
 
 ## Hunt Lead
 
-"The advisory says previous victims were compromised through remote access infrastructure. Profile every account. Find the one that doesn't fit."
+"Confirm access. What is the Sentinel custom log table name?
+
+Format: Exact table name as it appears in Sentinel."
 
 ## Query Used
 
