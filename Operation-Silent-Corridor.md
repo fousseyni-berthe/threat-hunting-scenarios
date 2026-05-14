@@ -1206,6 +1206,19 @@ The encoded archive was exfiltrated to: `cdn-telemetry.cloud-endpoint.net`. The 
 
 Format: Whole number of days
 
+## Query Used
+
+```kql
+let HuntData = SilentCorridorX_CL
+| where isnotempty(EventTime)
+| where TimeGenerated > datetime(2026-04-07T14:00:00Z);
+HuntData
+| where MdeTable == "DeviceProcessEvents"
+| where AccountName == "s.brandt"
+| project EventTime, DeviceName, AccountName, FileName, ProcessCommandLine
+| sort by EventTime asc
+```
+
 ## Investigation
 
 The attacker resumed activity approximately two days after the initial exfiltration event. This delay likely represented an attempt to evade time-based detection mechanisms.
