@@ -8,11 +8,7 @@ Aligned with NIST SP 800-61 and mapped to the MITRE ATT&CK Framework
 
 The Hunt 04 investigation identified a successful multi-stage intrusion targeting the Engineering network through compromised VPN credentials associated with the accounts `s.brandt` and `m.richter`. The attacker initially gained access through the FortiGate VPN infrastructure using anonymized infrastructure and residential IP addresses before establishing a foothold on `WS-ENG04`.
 
-Following initial access, the threat actor conducted internal reconnaissance, credential access activities, lateral movement to `SRV-DC01` and `SRV-FILES02`, and ultimately staged and exfiltrated sensitive data. Targeted assets included the Active Directory database (`ntds.dit`) and classified engineering data located in `C:\Engineering\Avionics\A400M_NavSys`.
-
-The adversary established persistence through `netsh interface portproxy` configurations stored in the registry under:
-
-`HKLM\System\CurrentControlSet\Services\PortProxy\v4tov4\tcp`
+Following initial access, the threat actor conducted internal reconnaissance, credential access activities, lateral movement to `SRV-DC01` and `SRV-FILES02`, and ultimately staged and exfiltrated sensitive data. Targeted assets included the Active Directory database (`ntds.dit`) and classified engineering data located in `C:\Engineering\Avionics\A400M_NavSys`. The adversary established persistence through `netsh interface portproxy` configurations stored in the registry under: `HKLM\System\CurrentControlSet\Services\PortProxy\v4tov4\tcp`
 
 The actor also attempted anti-forensic cleanup by clearing Windows event logs and deleting staging artifacts. However, Sysmon telemetry remained intact and enabled reconstruction of attacker activity.
 
@@ -147,9 +143,7 @@ SilentCorridorX_CL
 
 ## Investigation
 
-The investigation identified the first failed VPN authentication attempt associated with `s.brandt`. The earliest failed authentication originated from IP address `185.220.101.34`, a known Tor exit node.
-
-This activity strongly indicated credential abuse rather than legitimate user behavior.
+The investigation identified the first failed VPN authentication attempt associated with `s.brandt`. The earliest failed authentication originated from IP address `185.220.101.34`, a known Tor exit node. This activity strongly indicated credential abuse rather than legitimate user behavior.
 
 ## MITRE ATT&CK Mapping
 
@@ -184,9 +178,7 @@ SilentCorridorX_CL
 
 ## Investigation
 
-The investigation identified that the compromised account `s.brandt` interacted with four distinct hosts during the attack window.
-
-This confirmed that the account was used for multi-host reconnaissance and lateral movement activity.
+The investigation identified that the compromised account `s.brandt` interacted with four distinct hosts during the attack window. This confirmed that the account was used for multi-host reconnaissance and lateral movement activity.
 
 ## MITRE ATT&CK Mapping
 
@@ -220,9 +212,7 @@ SilentCorridorX_CL
 
 ## Investigation
 
-The investigation enumerated all distinct VPN source IP addresses associated with the compromised account `s.brandt`.
-
-Three addresses were associated with anonymization infrastructure, while one originated from residential IP space.
+The investigation enumerated all distinct VPN source IP addresses associated with the compromised account `s.brandt`. Three addresses were associated with anonymization infrastructure, while one originated from residential IP space.
 
 ## MITRE ATT&CK Mapping
 
@@ -294,9 +284,7 @@ SilentCorridorX_CL
 
 ## Investigation
 
-Immediately following VPN access, the attacker executed `systeminfo.exe` through `cmd.exe` on `WS-ENG04`.
-
-This activity represented initial host reconnaissance and confirmed interactive attacker presence.
+Immediately following VPN access, the attacker executed `systeminfo.exe` through `cmd.exe` on `WS-ENG04`. This activity represented initial host reconnaissance and confirmed interactive attacker presence.
 
 ## MITRE ATT&CK Mapping
 
@@ -331,9 +319,7 @@ SilentCorridorX_CL
 
 ## Investigation
 
-The attacker enumerated privileged Active Directory groups including `Domain Admins` and `Enterprise Admins` using built-in Windows administrative utilities.
-
-This confirmed privilege escalation reconnaissance and targeting of high-value administrative accounts.
+The attacker enumerated privileged Active Directory groups including `Domain Admins` and `Enterprise Admins` using built-in Windows administrative utilities. This confirmed privilege escalation reconnaissance and targeting of high-value administrative accounts.
 
 ## MITRE ATT&CK Mapping
 
@@ -410,11 +396,7 @@ HuntData
 
 ## Investigation
 
-The attacker executed:
-
-`tasklist /fi "imagename eq lsass.exe"`
-
-This activity confirmed reconnaissance targeting `lsass.exe` prior to credential dumping attempts.
+The attacker executed: `tasklist /fi "imagename eq lsass.exe"`. This activity confirmed reconnaissance targeting `lsass.exe` prior to credential dumping attempts.
 
 ## MITRE ATT&CK Mapping
 
@@ -451,9 +433,7 @@ HuntData
 
 ## Investigation
 
-The attacker attempted to dump LSASS memory using `rundll32.exe comsvcs.dll MiniDump`; however, no dump file was created.
-
-No defensive process intervened, but the dump operation failed to complete successfully.
+The attacker attempted to dump `LSASS` memory using `rundll32.exe comsvcs.dll MiniDump`; however, no dump file was created. No defensive process intervened, but the dump operation failed to complete successfully.
 
 ## MITRE ATT&CK Mapping
 
@@ -491,11 +471,7 @@ HuntData
 
 ## Investigation
 
-Following the failed LSASS dump attempt, the attacker pivoted to registry hive extraction using:
-
-`reg save HKLM\SAM`
-
-This activity targeted locally stored Windows credentials.
+Following the failed LSASS dump attempt, the attacker pivoted to registry hive extraction using: `reg save HKLM\SAM`. This activity targeted locally stored Windows credentials.
 
 ## MITRE ATT&CK Mapping
 
@@ -532,11 +508,7 @@ HuntData
 
 ## Investigation
 
-The attacker executed:
-
-`cmdkey /list`
-
-This command enumerated credentials stored within Windows Credential Manager and likely exposed saved RDP and network authentication credentials.
+The attacker executed: `cmdkey /list`. This command enumerated credentials stored within Windows Credential Manager and likely exposed saved RDP and network authentication credentials.
 
 ## MITRE ATT&CK Mapping
 
@@ -572,9 +544,7 @@ HuntData
 
 ## Investigation
 
-The attacker leveraged stolen credentials to remotely access `SRV-DC01` using account `m.richter` over tunnel `10.1.96.114`.
-
-The lateral movement activity originated from `WS-ENG04` using WMIC remote execution.
+The attacker leveraged stolen credentials to remotely access `SRV-DC01` using account `m.richter` over tunnel `10.1.96.114`. The lateral movement activity originated from `WS-ENG04` using `WMIC` remote execution.
 
 ## MITRE ATT&CK Mapping
 
@@ -647,9 +617,7 @@ HuntData
 
 ## Investigation
 
-The attacker utilized `WMIC.exe` to remotely spawn processes on `SRV-DC01`.
-
-Process execution was observed through `WmiPrvSE.exe`, confirming remote WMI-based command execution.
+The attacker utilized `WMIC.exe` to remotely spawn processes on `SRV-DC01`. Process execution was observed through `WmiPrvSE.exe`, confirming remote WMI-based command execution.
 
 ## MITRE ATT&CK Mapping
 
@@ -685,11 +653,7 @@ SilentCorridorX_CL
 
 ## Investigation
 
-The attacker created the staging directory:
-
-`C:\Windows\Temp\McAfee_Logs`
-
-The naming convention masqueraded as legitimate antivirus logs and was used to stage Active Directory database artifacts.
+The attacker created the staging directory: `C:\Windows\Temp\McAfee_Logs`. The naming convention masqueraded as legitimate antivirus logs and was used to stage Active Directory database artifacts.
 
 ## MITRE ATT&CK Mapping
 
@@ -725,9 +689,7 @@ SilentCorridorX_CL
 
 ## Investigation
 
-The attacker used `ntdsutil.exe` under account `m.richter` to create an IFM set containing `ntds.dit`.
-
-This activity enabled offline extraction of Active Directory credentials.
+The attacker used `ntdsutil.exe` under account `m.richter` to create an IFM set containing `ntds.dit`. This activity enabled offline extraction of Active Directory credentials.
 
 ## MITRE ATT&CK Mapping
 
@@ -762,9 +724,7 @@ SilentCorridorX_CL
 
 ## Investigation
 
-On `2026-02-28T04:21:52.4730000+00:00` Microsoft Defender (`MsMpEng.exe`) interacted with the staged files during real-time scanning operations.
-
-Although the activity was detected, no preventive action stopped the staging process.
+On `2026-02-28T04:21:52.4730000+00:00` Microsoft Defender (`MsMpEng.exe`) interacted with the staged files during real-time scanning operations. Although the activity was detected, no preventive action stopped the staging process.
 
 ## MITRE ATT&CK Mapping
 
@@ -799,9 +759,7 @@ SilentCorridorX_CL
 
 ## Investigation
 
-The attacker used `ntdsutil` to generate an Install From Media (IFM) set while Active Directory services remained online.
-
-This allowed extraction of the `ntds.dit` database without shutting down domain services.
+The attacker used `ntdsutil` to generate an Install From Media (IFM) set while Active Directory services remained online. This allowed extraction of the `ntds.dit` database without shutting down domain services.
 
 ## MITRE ATT&CK Mapping
 
@@ -838,9 +796,7 @@ HuntData
 
 ## Investigation
 
-Commands executed on `SRV-DC01` were remotely spawned through `WmiPrvSE.exe` originating from `WS-ENG04`.
-
-This confirmed remote WMI-based lateral movement.
+Commands executed on `SRV-DC01` were remotely spawned through `WmiPrvSE.exe` originating from `WS-ENG04`. This confirmed remote WMI-based lateral movement.
 
 ## MITRE ATT&CK Mapping
 
@@ -919,13 +875,7 @@ HuntData
 
 ## Investigation
 
-The attacker configured a port proxy on `WS-ENG04` using:
-
-`netsh interface portproxy add v4tov4`
-
-The rule redirected traffic from port `8443` to SMB port `445` on `SRV-DC01.haldric.local`.
-
-This enabled covert network tunneling and persistent access.
+The attacker configured a port proxy on `WS-ENG04` using: `netsh interface portproxy add v4tov4`. The rule redirected traffic from port `8443` to SMB port `445` on `SRV-DC01.haldric.local`. This enabled covert network tunneling and persistent access.
 
 ## MITRE ATT&CK Mapping
 
@@ -963,11 +913,7 @@ HuntData
 
 ## Investigation
 
-The port proxy configuration persisted through the registry key:
-
-`HKLM\System\CurrentControlSet\Services\PortProxy\v4tov4\tcp`
-
-This persistence mechanism survives system reboots.
+The port proxy configuration persisted through the registry key: `HKLM\System\CurrentControlSet\Services\PortProxy\v4tov4\tcp`. This persistence mechanism survives system reboots.
 
 ## MITRE ATT&CK Mapping
 
@@ -1042,11 +988,7 @@ HuntData
 
 ## Investigation
 
-The attacker targeted:
-
-`C:\Engineering\Avionics\A400M_NavSys`
-
-The directory contents were archived and prepared for exfiltration.
+The attacker targeted: `C:\Engineering\Avionics\A400M_NavSys`. The directory contents were archived and prepared for exfiltration.
 
 ## MITRE ATT&CK Mapping
 
@@ -1122,11 +1064,7 @@ HuntData
 
 ## Investigation
 
-The attacker used the PowerShell cmdlet:
-
-`Compress-Archive`
-
-This cmdlet compressed the targeted engineering files into an archive prior to exfiltration.
+The attacker used the PowerShell cmdlet: `Compress-Archive`. This cmdlet compressed the targeted engineering files into an archive prior to exfiltration.
 
 ## MITRE ATT&CK Mapping
 
@@ -1165,9 +1103,7 @@ HuntData
 
 ## Investigation
 
-The attacker used `certutil.exe -encode` to Base64-encode the archive prior to exfiltration.
-
-This allowed the archive to bypass content inspection mechanisms by transforming binary data into text format.
+The attacker used `certutil.exe -encode` to Base64-encode the archive prior to exfiltration. This allowed the archive to bypass content inspection mechanisms by transforming binary data into text format.
 
 ## MITRE ATT&CK Mapping
 
@@ -1205,9 +1141,7 @@ HuntData
 
 ## Investigation
 
-The attacker exfiltrated data using PowerShell `Invoke-WebRequest` through an HTTP POST request.
-
-The encoded archive was transferred from `WS-ENG04` to an external attacker-controlled domain.
+The attacker exfiltrated data using PowerShell `Invoke-WebRequest` through an HTTP POST request. The encoded archive was transferred from `WS-ENG04` to an external attacker-controlled domain.
 
 ## MITRE ATT&CK Mapping
 
@@ -1245,11 +1179,7 @@ HuntData
 
 ## Investigation
 
-The encoded archive was exfiltrated to:
-
-`cdn-telemetry.cloud-endpoint.net`
-
-The domain was intentionally named to resemble legitimate telemetry infrastructure.
+The encoded archive was exfiltrated to: `cdn-telemetry.cloud-endpoint.net`. The domain was intentionally named to resemble legitimate telemetry infrastructure.
 
 ## MITRE ATT&CK Mapping
 
@@ -1271,9 +1201,7 @@ Format: Whole number of days
 
 ## Investigation
 
-The attacker resumed activity approximately two days after the initial exfiltration event.
-
-This delay likely represented an attempt to evade time-based detection mechanisms.
+The attacker resumed activity approximately two days after the initial exfiltration event. This delay likely represented an attempt to evade time-based detection mechanisms.
 
 ## MITRE ATT&CK Mapping
 
@@ -1310,11 +1238,7 @@ HuntData
 
 ## Investigation
 
-The attacker executed:
-
-`wevtutil cl Security`
-
-This command cleared Windows Security event logs on compromised systems as part of anti-forensic cleanup activity.
+The attacker executed: `wevtutil cl Security`. This command cleared Windows Security event logs on compromised systems as part of anti-forensic cleanup activity.
 
 ## MITRE ATT&CK Mapping
 
@@ -1330,9 +1254,7 @@ This command cleared Windows Security event logs on compromised systems as part 
 
 ## Hunt lead
 
-"They cleared logs on every host. But not all the same way.
-
-Which host had logs cleared from the console, and which had them cleared remotely?"
+"They cleared logs on every host. But not all the same way. Which host had logs cleared from the console, and which had them cleared remotely?"
 
 Format: DIRECT_HOST/REMOTE_HOSTS (remotes alphabetical, comma-separated)
 
@@ -1417,7 +1339,7 @@ Format: HIGH/MEDIUM/LOW followed by supporting evidence
 
 ## Investigation
 
-Evidence confirmed successful exfiltration of sensitive data through multiple correlated telemetry sources. The archive containing stolen data was compressed, Base64 encoded, staged on the beachhead, and transferred to an external domain using PowerShell.
+Evidence confirmed successful exfiltration of sensitive data through multiple correlated telemetry sources. The archive containing stolen data was compressed, `Base64` encoded, staged on the beachhead, and transferred to an external domain using PowerShell.
 
 ## MITRE ATT&CK Mapping
 
@@ -1497,14 +1419,14 @@ The investigation confirmed compromise of both `s.brandt` and `m.richter` accoun
 
 1. Immediately isolate:
 
-   * WS-ENG04
-   * SRV-DC01
-   * SRV-FILES02
+   * `WS-ENG04`
+   * `SRV-DC01`
+   * `SRV-FILES02`
 
 2. Disable and reset credentials for:
 
-   * s.brandt
-   * m.richter
+   * `s.brandt`
+   * `m.richter`
 
 3. Force enterprise-wide Active Directory password resets due to `ntds.dit` exposure.
 
