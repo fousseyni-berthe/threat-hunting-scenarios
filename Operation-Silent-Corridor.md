@@ -608,8 +608,6 @@ HuntData
 | sort by todatetime(EventTime) asc
 ```
 
-<img width="1081" height="240" alt="image" src="https://github.com/user-attachments/assets/7ecf726d-e799-46fd-a9a5-4075704bb494" />
-
 ## Investigation
 
 The attacker used the compromised account `m.richter` during WMIC-based lateral movement toward `SRV-DC01`.
@@ -644,6 +642,7 @@ HuntData
 | project EventTime, DeviceName, AccountName, FileName, ProcessCommandLine
 | sort by todatetime(EventTime) asc
 ```
+<img width="1081" height="240" alt="image" src="https://github.com/user-attachments/assets/f9c2d884-0a83-432b-bdae-93de831c9671" />
 
 ## Investigation
 
