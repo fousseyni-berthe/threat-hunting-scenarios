@@ -710,6 +710,19 @@ The naming convention masqueraded as legitimate antivirus logs and was used to s
 
 Format: FILENAME/USER
 
+## Query Used
+
+```kql
+SilentCorridorX_CL
+| where DeviceName == "SRV-DC01"
+| where MdeTable == "DeviceFileEvents"
+| where ActionType == "FileCreated"
+| where todatetime(EventTime) > datetime(2026-02-28T04:17:30Z)
+| where todatetime(EventTime) < datetime(2026-02-28T05:00:00Z)
+| project EventTime, FileName, AccountName, FolderPath, InitiatingProcessCommandLine
+```
+<img width="660" height="208" alt="image" src="https://github.com/user-attachments/assets/0ba5c68f-ca79-43ec-b172-f4362016246f" />
+
 ## Investigation
 
 The attacker used `ntdsutil.exe` under account `m.richter` to create an IFM set containing `ntds.dit`.
@@ -745,10 +758,11 @@ SilentCorridorX_CL
 | project EventTime, FileName, InitiatingProcessFileName, ActionType
 | where InitiatingProcessFileName != "ntdsutil.exe"
 ```
+<img width="591" height="229" alt="image" src="https://github.com/user-attachments/assets/f89acbb3-c68f-4993-a89c-d9bfcfbb48a4" />
 
 ## Investigation
 
-Microsoft Defender (`MsMpEng.exe`) interacted with the staged files during real-time scanning operations.
+On `2026-02-28T04:21:52.4730000+00:00` Microsoft Defender (`MsMpEng.exe`) interacted with the staged files during real-time scanning operations.
 
 Although the activity was detected, no preventive action stopped the staging process.
 
