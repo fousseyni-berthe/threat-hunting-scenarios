@@ -1377,9 +1377,10 @@ Format: Log source name
 
 ## Investigation
 
-Sysmon logging remained intact despite clearing of Windows Security logs.
-
-Specifically, the attacker failed to clear the `Microsoft-Windows-Sysmon/Operational` channel, which preserved process creation telemetry.
+Sysmon logging remained intact despite clearing of Windows Security logs with `wevtutil cl Security` command .
+Specifically, the attacker failed to clear the `Microsoft-Windows-Sysmon/Operational` channel, which preserved process creation telemetry. 
+And it was Sysmon who logged that command itself. 🎯 
+That's why the entire attack could still be reconstructed despite the log clearing!
 
 ## MITRE ATT&CK Mapping
 
