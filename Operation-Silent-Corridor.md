@@ -870,8 +870,9 @@ HuntData
 | where MdeTable == "DeviceLogonEvents"
 | where RemoteIP == "10.1.96.114"
 | project EventTime, DeviceName, AccountName, RemoteIP, LogonType, ActionType
-| sort by EventTime asc
+| distinct DeviceName
 ```
+<img width="155" height="131" alt="image" src="https://github.com/user-attachments/assets/49892c75-e8c2-463b-b522-e7802a63a72d" />
 
 ## Investigation
 
@@ -914,6 +915,7 @@ HuntData
 | project EventTime, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName
 | sort by EventTime asc
 ```
+<img width="1045" height="265" alt="image" src="https://github.com/user-attachments/assets/236e25a8-b293-43c1-bf29-11eba694f3aa" />
 
 ## Investigation
 
