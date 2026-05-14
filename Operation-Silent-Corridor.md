@@ -595,6 +595,21 @@ The lateral movement activity originated from `WS-ENG04` using WMIC remote execu
 
 Format: username
 
+## Query Used
+
+```kql
+let HuntData = SilentCorridorX_CL
+| where isnotempty(EventTime)
+| where TimeGenerated > datetime(2026-04-07T14:00:00Z);
+HuntData
+| where MdeTable == "DeviceProcessEvents"
+| where ProcessCommandLine has "SRV-DC01"
+| project EventTime, DeviceName, AccountName, FileName, ProcessCommandLine
+| sort by todatetime(EventTime) asc
+```
+
+<img width="1081" height="240" alt="image" src="https://github.com/user-attachments/assets/7ecf726d-e799-46fd-a9a5-4075704bb494" />
+
 ## Investigation
 
 The attacker used the compromised account `m.richter` during WMIC-based lateral movement toward `SRV-DC01`.
