@@ -1218,6 +1218,7 @@ HuntData
 | project EventTime, DeviceName, AccountName, FileName, ProcessCommandLine
 | sort by EventTime asc
 ```
+<img width="932" height="223" alt="image" src="https://github.com/user-attachments/assets/03dafe7d-3e8e-4e9a-b579-94e755de439c" />
 
 ## Investigation
 
